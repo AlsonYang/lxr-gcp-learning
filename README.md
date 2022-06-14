@@ -2,14 +2,15 @@
    1. [1.1. Offical](#11-offical)
 2. [2. GCP Products](#2-gcp-products)
    1. [2.1. Document AI](#21-document-ai)
-   2. [2.2. Dataproc](#22-dataproc)
-   3. [2.3. Dataprep](#23-dataprep)
+   2. [2.2. Dataproc (Hadoop cluster)](#22-dataproc-hadoop-cluster)
+   3. [2.3. Dataprep (UI-Driven Data Prep)](#23-dataprep-ui-driven-data-prep)
    4. [2.4. Dataflow Flex](#24-dataflow-flex)
-   5. [2.5. Dataflow](#25-dataflow)
-   6. [2.6. Data Fusion](#26-data-fusion)
+   5. [2.5. Dataflow (Apache Beam based jobs)](#25-dataflow-apache-beam-based-jobs)
+   6. [2.6. Data/Cloud Fusion](#26-datacloud-fusion)
    7. [2.7. Cloud Pub/Sub](#27-cloud-pubsub)
    8. [2.8. Cloud Spanner](#28-cloud-spanner)
    9. [2.9. Cloud Composer](#29-cloud-composer)
+   10. [2.10. Cloud Monitoring](#210-cloud-monitoring)
 3. [3. Machine Learning](#3-machine-learning)
    1. [3.1. Problem Framing](#31-problem-framing)
    2. [3.2. Data Preparation and Feature Engineering](#32-data-preparation-and-feature-engineering)
@@ -32,15 +33,19 @@
    2. [4.2. Neural Network](#42-neural-network)
 5. [5. AI Explanations](#5-ai-explanations)
 6. [6. Tensorflow](#6-tensorflow)
-   1. [6.1. Keras](#61-keras)
-      1. [6.1.1. Functional vs Sequential API](#611-functional-vs-sequential-api)
-      2. [6.1.2. Feature engineering](#612-feature-engineering)
-         1. [6.1.2.1. Bucketing](#6121-bucketing)
-         2. [6.1.2.2. Feature cross](#6122-feature-cross)
-         3. [6.1.2.3. Softmax](#6123-softmax)
-         4. [6.1.2.4. Faster input pipeline](#6124-faster-input-pipeline)
-   2. [6.2. Accelerators](#62-accelerators)
-   3. [6.3. Distributor](#63-distributor)
+   1. [6.1. Tensorflow Enterprise](#61-tensorflow-enterprise)
+   2. [6.2. Keras](#62-keras)
+      1. [6.2.1. Functional vs Sequential API](#621-functional-vs-sequential-api)
+      2. [6.2.2. Feature engineering](#622-feature-engineering)
+         1. [6.2.2.1. Bucketing](#6221-bucketing)
+         2. [6.2.2.2. Feature cross](#6222-feature-cross)
+         3. [6.2.2.3. Softmax](#6223-softmax)
+         4. [6.2.2.4. Faster input pipeline](#6224-faster-input-pipeline)
+   3. [6.3. Model Monitoring](#63-model-monitoring)
+   4. [6.4. Accelerators](#64-accelerators)
+   5. [6.5. Distributor](#65-distributor)
+   6. [6.6. LIT (Languge Interpretability Tool)](#66-lit-languge-interpretability-tool)
+   7. [6.7. Tensorflow Probaility](#67-tensorflow-probaility)
 7. [7. MLOps](#7-mlops)
    1. [7.1. CI/CD architecture](#71-cicd-architecture)
    2. [7.2. TFX](#72-tfx)
@@ -65,6 +70,8 @@
          1. [7.8.2.1. Prediction logging](#7821-prediction-logging)
          2. [7.8.2.2. Model monitoring](#7822-model-monitoring)
             1. [7.8.2.2.1. Data drift](#78221-data-drift)
+            2. [7.8.2.2.2. Feature store](#78222-feature-store)
+         3. [7.8.2.3. Model Deployment](#7823-model-deployment)
    9. [7.9. APIs](#79-apis)
       1. [7.9.1. Natural Language](#791-natural-language)
       2. [7.9.2. Translation](#792-translation)
@@ -83,7 +90,7 @@
 ## 2.1. Document AI
 Automate data capture at scale to reduce document processing costs. (OCR)
 
-## 2.2. Dataproc
+## 2.2. Dataproc (Hadoop cluster)
 Use Dataproc for data lake modernization, ETL, and secure data science
 
 * Fully managed and automated big data open source software
@@ -91,22 +98,22 @@ Use Dataproc for data lake modernization, ETL, and secure data science
 * Enterprise security integrated with Google Cloud
 * The best of open source with the best of Google Cloud 
 
-## 2.3. Dataprep
+## 2.3. Dataprep (UI-Driven Data Prep)
 An intelligent cloud data service to **visually explore**, clean, and prepare data for analysis and machine learning.
 
 ## 2.4. Dataflow Flex
-Unified stream and batch data processing that's serverless, fast, and cost-effective.
+Unified **stream** and **batch** data processing that's **serverless**, fast, and cost-effective.
 * Autoscaling of resources and dynamic work rebalancing
 * Flexible scheduling and pricing for batch processing
 * Ready-to-use real-time AI patterns
-* 
+
 Use case:
 * Stream analytics
 * Real-time AI
 * Sensor and log data processing
 
 
-## 2.5. Dataflow
+## 2.5. Dataflow (Apache Beam based jobs)
 [link](https://cloud.google.com/dataflow)
 Unified stream and batch data processing that's serverless, fast, and cost-effective.
 * Autoscalling of resource
@@ -118,7 +125,9 @@ Use Beam with **dataflow** to write elastic data processing pipeline
 * Serverless
 * Support both batch (from cloud storage) and streaming (from pub/sub) process using the same pipeline code
 
-## 2.6. Data Fusion
+![comparing](https://cloud.google.com/architecture/images/data-lifecycle-4.svg)
+
+## 2.6. Data/Cloud Fusion
 Fully managed, cloud-native data integration at any scale.
 * Visual point-and-click interface enabling **code-free** deployment of ETL/ELT data pipelines
     * Data Fusion’s intuitive drag-and-drop interface, pre-built connectors, and self-service model of code-free data integration remove technical expertise-based bottlenecks and accelerate time to insight.
@@ -137,6 +146,12 @@ Fully managed relational database with **unlimited scale**, strong consistency, 
 
 ## 2.9. Cloud Composer
 A fully managed **workflow orchestration** service built on **Apache Airflow**.
+
+## 2.10. Cloud Monitoring
+[link](https://cloud.google.com/monitoring) Gain visibility into the performance, availability, and health of your applications and infrastructure.
+
+## Cloud BigTable
+A fully managed, **scalable NoSQL database** service for large analytical and operational workloads with up to 99.999% availability.
 
 # 3. Machine Learning
 ## 3.1. Problem Framing
@@ -298,8 +313,15 @@ Integrated ingredients can be used for large feature spaces;
 Also, an important tool to know about is [WhatIf Tool](https://pair-code.github.io/what-if-tool/) — when do you use it? How do you use it? How do you discover different outcomes? How do you conduct experiments?
 
 # 6. Tensorflow
-## 6.1. Keras
-### 6.1.1. Functional vs Sequential API
+## 6.1. Tensorflow Enterprise
+The TensorFlow Enterprise is a distribution of the open-source platform for ML, linked to specific versions of TensorFlow, tailored for enterprise customers.
+
+It is free but only for big enterprises with a lot of services in GCP. It is prepackaged and optimized for usage with containers and VMs.
+
+It works in Google Cloud, from VM images to managed services like GKE and Vertex AI.
+
+## 6.2. Keras
+### 6.2.1. Functional vs Sequential API
 * **Functional API**  - is a way to create models that are more flexible than the tf.keras.Sequential API. The functional API can handle models with non-linear topology, shared layers, and even multiple inputs or outputs.
 ```python
 dense = layers.Dense(64, activation="relu")
@@ -319,8 +341,8 @@ x = tf.ones((3, 3))
 y = model(x)
 ```
 
-### 6.1.2. Feature engineering
-#### 6.1.2.1. Bucketing
+### 6.2.2. Feature engineering
+#### 6.2.2.1. Bucketing
 * if you know the keys beforehand, use `tf.feature_columns.categorical_column_with_vocabulary_list`
 * if your data is already indexed, use `tf.feature_columns.categorical_column_with_identity`
 * if you don't have index a vocabulary of all possible value, use `tf.feature_columns.categorical_column_with_hash_bucket`
@@ -338,7 +360,7 @@ tf.feature_columns.categorical_column_with_hash_bucket(
 	'employee_id',hash_bucket_size=500
 )
 ```
-#### 6.1.2.2. Feature cross
+#### 6.2.2.2. Feature cross
 Problem is not always linear separable :arrow_right: need higher dimensional data to draw decision boundary: a feature cross memorize the input space
 * If you dont have enough data, you risk in overfitting, memorization works well when you have large dataset.
 * Memorization is the opposite to the generalization :arrow_right: the large the data, more powerful the memorization it is (and so does feature cross)
@@ -351,7 +373,7 @@ Problem is not always linear separable :arrow_right: need higher dimensional dat
 	* Rule of thumb: between 0.5*sqrt(n) and 2n (trade of memorization and sparsity) 
 * Embeded feature cross :arrow_right: Let the model to learn how to represent the feature cross in lower dimensional space
 
-#### 6.1.2.3. Softmax
+#### 6.2.2.3. Softmax
 * `softmax_cross_entropy_with_logits_v2` - general multi-calss classification
   * While the classes are mutually exclusive, their probabilities need not be. All that is required is that each row of labels is a valid probability distribution
     ```python
@@ -377,7 +399,7 @@ Problem is not always linear separable :arrow_right: need higher dimensional dat
         labels=labels, logits=logits).numpy()
     ```
 
-#### 6.1.2.4. Faster input pipeline
+#### 6.2.2.4. Faster input pipeline
 `tf.data.Dataset` allows you to :arrow_right: consider this when reading data inputs has become an bottleneck to the training / scoring process
 
 * create data pipeline from
@@ -396,15 +418,24 @@ Problem is not always linear separable :arrow_right: need higher dimensional dat
     dataset = dataset.shuffle(1000).repeat(epochs).batch(batch_size, drop_remainder=True)
     ```
 
+`tf.TFRecordReader `: The TFRecord format is efficient for storing a sequence of binary and not-binary records using Protocol buffers for serialization of structured data.
 
-## 6.2. Accelerators
+`tf.Quantization`: Aimed to reduce CPU and TPU GCP latency, processing, and power.
+
+## 6.3. Model Monitoring
+* `tf.function`: a transformation tool used to make graphs out of your programs. It helps to create performant and portable models (change from eager mode to static graph)
+* `tf.Profiler`: a tool for checking the performance of your TensorFlow models and helping you to obtain an optimized version.
+* `tf.Trace`: lets you record TensorFlow Python operations in a graph.
+* `tf.CheckPoint`: Checkpoints catch the value of all parameters in a serialized SavedModel format.
+
+## 6.4. Accelerators
 You need to know the differences between CPUs, TPUs and GPUs and when to use each one. The general answer is that GPU training is faster than CPU training, and GPU usually doesn’t require any additional setup. TPUs are faster than GPUs but they don’t support custom operations.
 
 * Use CPUs for quick prototypes, simple/small models or if you have many C++ custom operations;
 * Use GPU if you have some custom C++ operations and/or medium to large models;
 * Use TPUs for big matrix computations, no custom TensorFlow operations and/or very large models that train for weeks or months
 
-## 6.3. Distributor
+## 6.5. Distributor
 
 [link](https://www.tensorflow.org/guide/distributed_training)
 
@@ -417,6 +448,17 @@ You need to know the differences between CPUs, TPUs and GPUs and when to use eac
 |   CentralStorageStrategy    |        Synchronous         |       one       |             many             | On CPU, could be placed on GPU if there is only one |
 |      Default Strategy       |      no distribution       |       one       |             one              |           on any GPU picked by TensorFlow           |
 |      OneDeviceStrategy      |      no distribution       |       one       |             one              |                on the specified GPU                 |
+
+## 6.6. LIT (Languge Interpretability Tool)
+The Language Interpretability Tool (LIT) is an open-source tool developed specifically to explain and visualize NLP natural language processing models.
+
+It is similar to the What-If tool, which instead targets classification and regression models with structured data.
+
+It offers visual explanations of the model‘s predictions and analysis with metrics, tests and validations.
+![link](https://skillcertpro.com/wp-content/uploads/2022/i/02/word-image-454.png)
+
+## 6.7. Tensorflow Probaility
+
 
 # 7. MLOps
 
@@ -585,6 +627,8 @@ Logical component that makeup kubeflow
 
 [Kubeflow for CI/CD](https://github.com/marketplace/actions/kubeflow-for-ci-cd)
 
+Kubeflow Servering: an open-source library for Kubernetes that enables serverless inferencing. It works with TensorFlow, XGBoost, scikit-learn, PyTorch, and ONNX to solve issues linked to production model serving. ![link](https://skillcertpro.com/wp-content/uploads/2022/i/02/word-image-437.png)
+
 
 ## 7.5. CI/CD
 * AB and Canary testing
@@ -634,11 +678,20 @@ Solution to data drift:
 * Continuous training
 * Continuous modeling
 
+##### 7.8.2.2.2. Feature store
+A service to organize and store ML features through a central store. This allows you to share and optimize ML features important for the specific environment and to reuse them at any time.
+
+#### 7.8.2.3. Model Deployment
+![link](https://skillcertpro.com/wp-content/uploads/2022/i/02/word-image-446.png)
+
 ## 7.9. APIs
 ### 7.9.1. Natural Language
 ### 7.9.2. Translation
 ### 7.9.3. Vision AI
 ### 7.9.4. Video AI
+* AutoML Video Intelligence: is a service that allows you to customize the pre-trained Video intelligence GCP system according to your specific needs. In particular, AutoML Video Intelligence Object Tracking allows you to identify and locate particular entities of interest to you with your **specific tags**.
+* Cloud Video Intelligence AI: similar but is a pre-configured and ready-to-use service, therefore not configurable for specific needs.
+
 ### 7.9.5. Other Products
 * AutoML
 * AI Platform Data Labelling Service
