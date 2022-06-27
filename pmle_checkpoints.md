@@ -11,7 +11,7 @@
    8. [2.8. Cloud Spanner](#28-cloud-spanner)
    9. [2.9. Cloud Composer](#29-cloud-composer)
    10. [2.10. Cloud Monitoring](#210-cloud-monitoring)
-   11. [Cloud BigTable](#cloud-bigtable)
+   11. [2.11. Cloud BigTable](#211-cloud-bigtable)
 3. [3. Machine Learning](#3-machine-learning)
    1. [3.1. Problem Framing](#31-problem-framing)
    2. [3.2. Data Preparation and Feature Engineering](#32-data-preparation-and-feature-engineering)
@@ -66,13 +66,14 @@
    6. [7.6. BigQuery ML](#76-bigquery-ml)
    7. [7.7. What all can you do with BigQuery ML? What are its limitations](#77-what-all-can-you-do-with-bigquery-ml-what-are-its-limitations)
    8. [7.8. AI Platform](#78-ai-platform)
-      1. [7.8.1. Continuous evaluation overview](#781-continuous-evaluation-overview)
-      2. [7.8.2. Vertex AI](#782-vertex-ai)
-         1. [7.8.2.1. Prediction logging](#7821-prediction-logging)
-         2. [7.8.2.2. Model monitoring](#7822-model-monitoring)
-            1. [7.8.2.2.1. Data drift](#78221-data-drift)
-            2. [7.8.2.2.2. Feature store](#78222-feature-store)
-         3. [7.8.2.3. Model Deployment](#7823-model-deployment)
+      1. [7.8.1. Use automatic hyperparameter tuning](#781-use-automatic-hyperparameter-tuning)
+      2. [7.8.2. Continuous evaluation overview](#782-continuous-evaluation-overview)
+      3. [7.8.3. Vertex AI](#783-vertex-ai)
+         1. [7.8.3.1. Prediction logging](#7831-prediction-logging)
+         2. [7.8.3.2. Model monitoring](#7832-model-monitoring)
+            1. [7.8.3.2.1. Data drift](#78321-data-drift)
+            2. [7.8.3.2.2. Feature store](#78322-feature-store)
+         3. [7.8.3.3. Model Deployment](#7833-model-deployment)
    9. [7.9. APIs](#79-apis)
       1. [7.9.1. Natural Language](#791-natural-language)
       2. [7.9.2. Translation](#792-translation)
@@ -125,6 +126,7 @@ Unified stream and batch data processing that's serverless, fast, and cost-effec
 Use Beam with **dataflow** to write elastic data processing pipeline
 * Serverless
 * Support both batch (from cloud storage) and streaming (from pub/sub) process using the same pipeline code
+* When you work with large datasets, Dataflow is more scalable and cost-effective than AI Platform Training. For example, see TensorFlow Model Analysis, which is implemented using Apache Beam, and which can run on Dataflow to evaluate TensorFlow SavedModels.
 
 Some features:
 *  *Interactive Apache Beam runner (beta)* lets you iteratively develop pipelines on a small dataset and cost-effectively validate the correctness of the pipeline
@@ -134,7 +136,7 @@ Some features:
 ![comparing](https://cloud.google.com/architecture/images/data-lifecycle-4.svg)
 
 ## 2.6. Data/Cloud Fusion
-Fully managed, cloud-native data integration at any scale.
+Fully managed, cloud-native *data integration* at any scale.
 * Visual point-and-click interface enabling **code-free** deployment of ETL/ELT data pipelines
     * Data Fusion’s intuitive drag-and-drop interface, pre-built connectors, and self-service model of code-free data integration remove technical expertise-based bottlenecks and accelerate time to insight.
 * A **serverless** approach leveraging the scalability and reliability of Google services like Dataproc means Data Fusion offers the best of data integration capabilities with a lower total cost of ownership.
@@ -147,6 +149,9 @@ Fully managed, cloud-native data integration at any scale.
 
 ## 2.8. Cloud Spanner
 Fully managed relational database with **unlimited scale**, strong consistency, and up to 99.999% availability.
+
+Spanner is a row-based, transactional database. You want to use spanner to back transaction processing such as e-commerce, core banking, gaming ...; on the other hand, big query (bq) is columnar data warehouse, good for analytical work.
+
 * Get all the benefits of relational semantics and **SQL** with unlimited scale
 * Deliver high-performance **transactions** with strong consistency across regions and continents
 
@@ -156,7 +161,7 @@ A fully managed **workflow orchestration** service built on **Apache Airflow**.
 ## 2.10. Cloud Monitoring
 [link](https://cloud.google.com/monitoring) Gain visibility into the performance, availability, and health of your applications and infrastructure.
 
-## Cloud BigTable
+## 2.11. Cloud BigTable
 A fully managed, **scalable NoSQL database** service for large analytical and operational workloads with up to 99.999% availability.
 
 # 3. Machine Learning
@@ -445,15 +450,15 @@ You need to know the differences between CPUs, TPUs and GPUs and when to use eac
 
 [link](https://www.tensorflow.org/guide/distributed_training)
 
-|          Strategy           | Synchronous / Asynchronous | Number of nodes | Number of GPUs/TPUs per node |           How model parameters are stored           |
-| :-------------------------: | :------------------------: | :-------------: | :--------------------------: | :-------------------------------------------------: |
-|      MirroredStrategy       |        Synchronous         |       one       |             many             |                     On each GPU                     |
-|         TPUStrategy         |        Synchronous         |       one       |             many             |                     On each TPU                     |
-| MultiWorkerMirroredStrategy |        Synchronous         |      many       |             many             |              On each GPU on each node               |
-|   ParameterServerStrategy   |        Asynchronous        |      many       |             one              |               On the Parameter Server               |
-|   CentralStorageStrategy    |        Synchronous         |       one       |             many             | On CPU, could be placed on GPU if there is only one |
-|      Default Strategy       |      no distribution       |       one       |             one              |           on any GPU picked by TensorFlow           |
-|      OneDeviceStrategy      |      no distribution       |       one       |             one              |                on the specified GPU                 |
+|          Strategy           | Synchronous / Asynchronous | Number of nodes | Number of GPUs/TPUs per node |                                                                                                                                                                                            How model parameters are stored                                                                                                                                                                                            |
+| :-------------------------: | :------------------------: | :-------------: | :--------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|      MirroredStrategy       |        Synchronous         |       one       |             many             |                                                                                                                                                                                                      On each GPU                                                                                                                                                                                                      |
+|         TPUStrategy         |        Synchronous         |       one       |             many             |                                                                                                                                                                                                      On each TPU                                                                                                                                                                                                      |
+| MultiWorkerMirroredStrategy |        Synchronous         |      many       |             many             |                                                                                                                                                                                               On each GPU on each node                                                                                                                                                                                                |
+|   ParameterServerStrategy   |        Asynchronous        |      many       |             one              | On the Parameter Server (Asynchronous distributed training with powerful GPUs requires a lot of bandwidth to the parameter server. However, the bandwidth available is proportional to the size (number of vCPUs) of the parameter server. Therefore, we recommended that you over-provision the compute capacity of the parameter server in order to increase the bandwidth and take full advantage of GPU workers.) |
+|   CentralStorageStrategy    |        Synchronous         |       one       |             many             |                                                                                                                                                                                  On CPU, could be placed on GPU if there is only one                                                                                                                                                                                  |
+|      Default Strategy       |      no distribution       |       one       |             one              |                                                                                                                                                                                            on any GPU picked by TensorFlow                                                                                                                                                                                            |
+|      OneDeviceStrategy      |      no distribution       |       one       |             one              |                                                                                                                                                                                                 on the specified GPU                                                                                                                                                                                                  |
 
 ## 6.6. LIT (Languge Interpretability Tool)
 The Language Interpretability Tool (LIT) is an open-source tool developed specifically to explain and visualize NLP natural language processing models.
@@ -472,6 +477,9 @@ It offers visual explanations of the model‘s predictions and analysis with met
 ![CI/CD architecture](https://cloud.google.com/architecture/images/architecture-for-mlops-using-tfx-kubeflow-pipelines-and-cloud-build-6-ci-cd-kubeflow.svg)
 
 ## 7.2. TFX
+The following diagram shows how the various TFX libraries are integrated to compose an ML system.
+![link](https://cloud.google.com/static/architecture/images/architecture-for-mlops-using-tfx-kubeflow-pipelines-and-cloud-build-2-tfx-libraries.svg)
+
 You have to know TFX (TensorFlow Extended) and its limitations (can be used to build pipelines for Tensoflow models only), what are its standard components (e.g. ingestion, validation, transform) and how to build a pipeline out of them.
 
 ### 7.2.1. Tensorflow extend
@@ -635,6 +643,11 @@ Logical component that makeup kubeflow
 
 Kubeflow Servering: an open-source library for Kubernetes that enables serverless inferencing. It works with TensorFlow, XGBoost, scikit-learn, PyTorch, and ONNX to solve issues linked to production model serving. ![link](https://skillcertpro.com/wp-content/uploads/2022/i/02/word-image-437.png)
 
+Triggering and scheduling jobs:
+* On a schedule, using `Cloud Scheduler`.
+* Responding to an event, using `Pub/Sub` and `Cloud Functions`. For example, the event can be the availability of new data files in a Cloud Storage bucket.
+* As part of a bigger data and process workflow, using `Cloud Composer` or `Cloud Data Fusion`.
+
 
 ## 7.5. CI/CD
 * AB and Canary testing
@@ -666,17 +679,25 @@ Model availables: linear regression; binary/multiclass logistic; k-mean; matrix 
 
 ## 7.8. AI Platform
 ![link](https://skillcertpro.com/wp-content/uploads/2022/i/02/word-image-389.png)
-### 7.8.1. Continuous evaluation overview
+
+### 7.8.1. Use automatic hyperparameter tuning
+* AI Platform provides a blackbox optimization service that helps you automatically tune hyperparameters in complex ML models. When you're configuring a hyperparameter tuning job, we recommend that you set `enableTrialEarlyStopping` to `True`; this helps limits the cost of the hyperparameter tuning job
+*  If you have a previous hyperparameter tuning job, you can set `resumePreviousJobId` to `True` to start from a state that is partially optimized. 
+*  Set `maxParallelTrials` to be between 2 and `maxTrials`/2 in order to converge faster to good hyperparameter values, which in turn reduces cost of hyperparameter tuning.
+
+
+### 7.8.2. Continuous evaluation overview
 Continuous evaluation regularly samples prediction input and output from trained machine learning models that you have deployed to AI Platform Prediction. AI Platform Data Labeling Service then assigns human reviewers to provide ground truth labels for your prediction input. :arrow_right: useful for image classification evaluation
 
-### 7.8.2. Vertex AI
-#### 7.8.2.1. Prediction logging
+
+### 7.8.3. Vertex AI
+#### 7.8.3.1. Prediction logging
 There are two types of prediction logs that you can use to get information from your prediction nodes:
 * Container logging, which logs the stdout and stderr streams from your prediction nodes to Cloud Logging. These logs are essential and required for debugging.
 * Access logging, which logs information like timestamp and latency for each request to Cloud Logging.
   
-#### 7.8.2.2. Model monitoring
-##### 7.8.2.2.1. Data drift
+#### 7.8.3.2. Model monitoring
+##### 7.8.3.2.1. Data drift
 * Concept drift - a change in $P(Y|X)$ is a shift in the actual relationship between the model inputs and the output :arrow_right: a big problem for steaming data
 * Prediction drift - a change in $P(Y_hat|X)$ is a shift in the model's predictions. For example, the model to predict good credit customer can change in different country; can your business ready to handle different among of good credit customer in different area?
 * Label drift - a change in P(Y ground truth) is a shift in the model's output or label distribution
@@ -686,11 +707,22 @@ Solution to data drift:
 * Continuous training
 * Continuous modeling
 
-##### 7.8.2.2.2. Feature store
+##### 7.8.3.2.2. Feature store
 A service to organize and store ML features through a central store. This allows you to share and optimize ML features important for the specific environment and to reuse them at any time.
 
-#### 7.8.2.3. Model Deployment
-![link](https://skillcertpro.com/wp-content/uploads/2022/i/02/word-image-446.png)
+#### 7.8.3.3. Model Deployment
+Use reduced-precision floating-point types: Smaller models lead to lower serving latency: `mix-precision trianing`
+
+Reduce model size using `post-training quantization`: a conversion technique that can reduce model size while also improving CPU and hardware accelerator latency, with little degradation in model accuracy. (`TensorFlow Lite Converter.`)
+
+Use manual scaling for highly variable request volume: If the number of requests that your model receives inherently fluctuates faster than automatic scaling can keep up with, it can be more efficient to use manual scaling
+
+Use autoscaling and set `minNodes` to zero when low latency isn't critical. This can help reduce cost when your model service isn't receiving any requests.
+
+Use TF-TRT with NVIDIA GPU accelerators. When you use NVIDIA GPU accelerators for serving, we recommend that you use TensorFlow with TensorRT (TF-TRT)
+
+Use `Cloud Monitoring` to configure alerts based on the ML metrics. You should monitor your model's traffic patterns, error rates, latency, and resource utilization to help you spot problems with your models, and to help find the right machine type to optimize latency and cost. 
+
 
 ## 7.9. APIs
 ### 7.9.1. Natural Language
