@@ -1,3 +1,5 @@
+![cert](image\cert.png)
+
 1. [1. Links](#1-links)
    1. [1.1. Offical](#11-offical)
 2. [2. GCP Products](#2-gcp-products)
@@ -11,6 +13,7 @@
    8. [2.8. Cloud Spanner](#28-cloud-spanner)
    9. [2.9. Cloud Composer](#29-cloud-composer)
    10. [2.10. Cloud Monitoring](#210-cloud-monitoring)
+   11. [Cloud BigTable](#cloud-bigtable)
 3. [3. Machine Learning](#3-machine-learning)
    1. [3.1. Problem Framing](#31-problem-framing)
    2. [3.2. Data Preparation and Feature Engineering](#32-data-preparation-and-feature-engineering)
