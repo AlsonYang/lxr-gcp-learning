@@ -1,4 +1,4 @@
-![cert](image\cert.png)
+![cert](image/cert.png)
 
 1. [1. Links](#1-links)
    1. [1.1. Offical](#11-offical)
